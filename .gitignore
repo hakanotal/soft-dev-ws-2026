@@ -1,0 +1,26 @@
+# Secrets: never commit these. Copy .env.example to .env and fill it in.
+.env
+.env.*
+!.env.example
+
+# Claude Code: share settings.json, skills and agents; keep personal files local
+.claude/settings.local.json
+.claude/worktrees/
+CLAUDE.local.md
+
+# Node
+node_modules/
+dist/
+coverage/
+*.log
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json

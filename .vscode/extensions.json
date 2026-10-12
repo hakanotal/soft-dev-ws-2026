@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "anthropic.claude-code",
+    "ms-python.python",
+    "ms-toolsai.jupyter",
+    "charliermarsh.ruff",
+    "mechatroner.rainbow-csv",
+    "mhutchie.git-graph",
+    "redhat.vscode-yaml",
+    "yzane.markdown-pdf",
+    "tomoki1207.pdf",
+    "PKief.material-icon-theme",
+    "zhuangtongfa.material-theme"
+  ]
+}
