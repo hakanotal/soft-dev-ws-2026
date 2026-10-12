@@ -8,6 +8,7 @@
       "Read(./.env.development)",
       "Read(./.env.production)",
       "Read(./secrets/**)",
+      "Read(./docs/**)",
       "Edit(./.env)",
       "Edit(./secrets/**)"
     ]
