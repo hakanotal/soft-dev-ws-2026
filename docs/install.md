@@ -4,6 +4,20 @@ Please finish this **before the workshop**. It takes about 30 to 45 minutes. Eve
 
 When you are done, step 11 shows you how to check that nothing is missing.
 
+## What is in here
+
+| Path | What it is |
+|---|---|
+| `CLAUDE.md` | Instructions Claude Code (and Cursor) read at the start of every session: stack, commands, rules |
+| `data/penguins.csv` | The dataset. See `data/README.md` for the columns |
+| `docs/install.md` | Setup guide |
+| `docs/cheatsheet.md` | Shortcuts and commands for the day |
+| `.claude/settings.json` | Shared Claude Code settings. Blocks reading `.env` |
+| `.claude/skills/new-feature/` | The `/new-feature` skill |
+| `.mcp.json` | MCP servers for Claude Code: Context7 (library docs) and Playwright (browser) |
+| `.github/workflows/deploy.yml` | Publishes `web/` to GitHub Pages |
+| `.env.example` | Names of environment variables. Copy to `.env` for real values |
+
 ## Before you start
 
 You need:
