@@ -50,3 +50,56 @@ Done means: the check command passes, summary.json is regenerated, and you have 
 1. On GitHub, open the repo's **Settings > Pages** and set **Source** to **GitHub Actions** (once per repo, before the first push of `web/`).
 2. Run `git push`.
 3. Watch the **Actions** tab. When the run is green, the site address appears under **Settings > Pages**.
+
+---
+
+# Parallel features: two agents at once
+
+Use these after the one-shot build has been merged into `main` (block 7, worktrees). Each prompt runs `/new-feature`, so each agent works in its own worktree and branch. The two features are designed to touch different files, so both branches merge cleanly.
+
+| Feature | Touches | Does not touch |
+|---|---|---|
+| A. Dark mode | CSS only | JavaScript, Python, data |
+| B. Sex by species | `analysis/`, `tests/`, `summary.json`, one new web file | Any CSS file |
+
+## How to run it
+
+1. In Cursor, open two terminals side by side (split the terminal), both in the repo root.
+2. Run `claude` in each. Paste prompt A in the left one and prompt B in the right one.
+3. Approve both plans. While they build, open a third terminal and show what is happening:
+   ```
+   git worktree list
+   git branch
+   ```
+4. When both report back, reply `merge` in one session, then in the other.
+5. Show the result, then push:
+   ```
+   git log --oneline --graph -10
+   git push
+   ```
+
+Each agent starts its own dev server (Vite picks the next free port, such as 5173 and 5174) and its own browser, so they do not get in each other's way.
+
+## Prompt A: dark mode
+
+```text
+/new-feature Add dark mode to Penguin Data Explorer that follows the system setting. Change only CSS: define the page colours as CSS custom properties and switch them inside a prefers-color-scheme: dark media query. The header, cards, table, charts and legend must stay readable in both modes, and the three species colours must stay easy to tell apart on a dark background. Do not edit any JavaScript, Python or data file, so this branch merges cleanly next to other work. If something can only be fixed in JavaScript, list it in your summary instead of changing it.
+
+Done means: the check command passes, and you have used the Playwright MCP server to open the page with a light colour scheme and again with a dark colour scheme, taken a screenshot of each, and told me where they are saved.
+```
+
+## Prompt B: sex by species
+
+```text
+/new-feature Add a "Sex by species" breakdown to Penguin Data Explorer.
+
+Analysis: add sex_breakdown(df) in analysis/ that returns, for each species, the number of male, female and unknown penguins, where a missing sex counts as unknown. Test it in tests/ with a small hand-made DataFrame that includes a missing value. Add the result to summary.json under a new key and regenerate the file. For the real data the totals must be 168 male, 165 female and 11 unknown.
+
+Web page: show it as a small table in a new section below the existing ones. Put the rendering code in a new file, web/src/sex-breakdown.js, and change existing files only to import and call it. Reuse the existing table styles and do not edit any CSS file, so this branch merges cleanly next to other work.
+
+Done means: the check command passes, and you have used the Playwright MCP server to take a screenshot of the new section and told me where it is saved.
+```
+
+## Want to show a merge conflict instead?
+
+Run both prompts with one extra line added to each, such as `Also change the page title to a new wording of your choice.` Both branches then edit the same line, the second merge stops with a conflict, and you resolve it together with Claude.
